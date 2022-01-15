@@ -1,0 +1,19 @@
+**/node_modules
+src/public/hot
+src/public/storage
+src/storage
+src/bootstrap/cache
+# src/.env
+src/vendor
+**/.phpunit.result.cache
+**/docker-compose.override.yml
+**/Homestead.json
+**/Homestead.yaml
+**/npm-debug.log
+**/yarn-error.log
+**/.idea
+**/.vscode
+
+# other files
+/postman
+**/*.md
