@@ -11,10 +11,10 @@ sail artisan ide-helper:model
 
 ```shell
 # app
-$ docker image build -f infra/docker/8.1/php/Dockerfile -t app .
+$ docker image build -f infra/docker/8.1/php/Dockerfile -t catlife-app .
 
 # nginx
-$ docker image build -f infra/docker/8.1/nginx/Dockerfile -t web .
+$ docker image build -f infra/docker/8.1/nginx/Dockerfile -t catlife-web .
 ```
 
 ### For development
