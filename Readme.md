@@ -20,5 +20,8 @@ $ docker image build -f infra/docker/8.1/nginx/Dockerfile -t catlife-web .
 ### For development
 ```bash
 $ export WWWUSER=`id -g`; docker-compose up -d
+
+# indicate user
+$ docker-compose exec --user 1000 app bash
 ```
 

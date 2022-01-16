@@ -43,7 +43,7 @@ services:
             MYSQL_PASSWORD: '${DB_PASSWORD}'
             MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
         volumes:
-            - 'sailmysql:/var/lib/mysql'
+            - 'catmysql:/var/lib/mysql'
         networks:
             - sail
         healthcheck:
@@ -71,7 +71,7 @@ services:
         ports:
             - '${FORWARD_REDIS_PORT:-6379}:6379'
         volumes:
-            - 'sailredis:/data'
+            - 'catredis:/data'
         networks:
             - sail
         healthcheck:
@@ -82,7 +82,7 @@ networks:
     sail:
         driver: bridge
 volumes:
-    sailmysql:
+    catmysql:
         driver: local
-    sailredis:
+    catredis:
         driver: local
