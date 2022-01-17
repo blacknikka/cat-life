@@ -40,6 +40,9 @@ RUN mkdir -p storage/framework/cache/data && \
     chmod -R 777 storage && \
     chown -R www-data:www-data /work/backend && \
     chmod +x /work/start-container/start-container && \
+    mkdir -p /home/www-data && \
+    usermod -d /home/www-data www-data && \
+    chown -R www-data:www-data /home/www-data && \
     composer install
 
 # install xdebug
