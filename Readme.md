@@ -25,3 +25,7 @@ $ export WWWUSER=`id -g`; docker-compose up -d
 $ docker-compose exec --user 1000 app bash
 ```
 
+### openapi
+```bash
+$ docker-compose exec --user 1000 app /work/backend/vendor/bin/openapi /work/backend/app/Http/Controllers --format yaml --output /work/backend/openapi/openapi.yaml
+```

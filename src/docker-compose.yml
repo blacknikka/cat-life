@@ -78,6 +78,15 @@ services:
             test: ["CMD", "redis-cli", "ping"]
             retries: 3
             timeout: 5s
+    swagger-ui:
+        image: swaggerapi/swagger-ui
+        container_name: "swagger-ui"
+        ports:
+            - "8002:8080"
+        volumes:
+            - ./openapi/openapi.yaml:/openapi/openapi.yaml
+        environment:
+            SWAGGER_JSON: /openapi/openapi.yaml
 networks:
     sail:
         driver: bridge
