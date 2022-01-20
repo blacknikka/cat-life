@@ -1,0 +1,11 @@
+openapi: 3.0.0
+info:
+  title: 'catlife API'
+  version: '0.1'
+paths:
+  /api/me:
+    get:
+      operationId: 4b0f4f02e78d668f71a78b9c9f82dc03
+      responses:
+        '200':
+          description: 'Get login user'

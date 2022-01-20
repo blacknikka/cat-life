@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 class MeController extends Controller
 {
     /**
+     * @OA\Info(title="catlife API", version="0.1")
+     * @OA\Get(
+     *     path="/api/me",
+     *     @OA\Response(response="200", description="Get login user")
+     * )
      * @param Request $request
      * @return JsonResponse
      */
