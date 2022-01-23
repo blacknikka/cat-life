@@ -229,6 +229,109 @@ paths:
                 properties:
                   message: { description: 'not found error', format: string, example: 'not found' }
                 type: object
+  /api/food_catalogs/:
+    post:
+      summary: 'Store a newly created resource in storage.'
+      operationId: f815b6148d19b0917336d078540a0e03
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - name
+              properties:
+                name:
+                  description: 'food name'
+                  format: string
+                  example: 'food name'
+                maker:
+                  description: 'maker name'
+                  format: string
+                  example: 'maker name'
+                calorie:
+                  description: calorie
+                  format: float
+                  example: 50.11
+                memo:
+                  description: memo
+                  format: string
+                  example: memo
+                url:
+                  description: url
+                  format: string
+                  example: 'https://example.com/product/1'
+              type: object
+      responses:
+        '200':
+          description: 'create specified food catalog'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FoodCatalogResource'
+  '/api/food_catalogs/{id}':
+    get:
+      summary: 'Display the specified resource.'
+      operationId: 2486449407ae020be78235ad68320d0c
+      responses:
+        '200':
+          description: 'get specified food catalog'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FoodCatalogResource'
+    delete:
+      summary: 'Remove the specified resource from storage.'
+      operationId: 54063387cadd4e9818660b9e94598f51
+      responses:
+        '200':
+          description: 'delete specified food catalogs'
+          content:
+            application/json:
+              schema:
+                properties:
+                  status: { description: 'delete succeeded or not', format: boolean, example: true }
+                type: object
+    patch:
+      summary: 'Update the specified resource in storage.'
+      operationId: cab5209c251f7abc68c6fd16bc3f77d3
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required: []
+              properties:
+                name:
+                  description: 'food name'
+                  format: string
+                  example: 'food name'
+                maker:
+                  description: 'maker name'
+                  format: string
+                  example: 'maker name'
+                calorie:
+                  description: calorie
+                  format: float
+                  example: 50.11
+                memo:
+                  description: memo
+                  format: string
+                  example: memo
+                url:
+                  description: url
+                  format: string
+                  example: 'https://example.com/product/1'
+              type: object
+      responses:
+        '200':
+          description: 'update specified food catalog'
+          content:
+            application/json:
+              schema:
+                properties:
+                  status: { description: 'updating succeeded or not', format: boolean, example: true }
+                type: object
   /api/me:
     get:
       operationId: 4b0f4f02e78d668f71a78b9c9f82dc03
@@ -288,6 +391,34 @@ components:
           description: memo
           format: string
           example: 'something you want to take a memo'
+      type: object
+    FoodCatalogResource:
+      description: 'Transform the resource into an array.'
+      properties:
+        id:
+          description: 'food id'
+          format: number
+          example: 1
+        name:
+          description: 'food name'
+          format: string
+          example: 'food name'
+        maker:
+          description: 'maker name'
+          format: string
+          example: 'maker name'
+        calorie:
+          description: calorie
+          format: float
+          example: 50.11
+        memo:
+          description: memo
+          format: string
+          example: memo
+        url:
+          description: url
+          format: string
+          example: 'https://example.com/product/1'
       type: object
     MeResource:
       description: 'Transform the resource into an array.'

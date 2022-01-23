@@ -22,7 +22,7 @@ class FoodCatalogFactory extends Factory
             'memo' => $this->faker->sentence(10),
             'picture' => base64_encode($this->faker->image()),
             'url' => $this->faker->url(),
-            'is_master' => $this->faker->boolean(),
+            'is_master' => false,
             'user_id' => User::factory(),
         ];
     }
