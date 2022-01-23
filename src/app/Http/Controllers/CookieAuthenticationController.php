@@ -17,6 +17,41 @@ class CookieAuthenticationController extends Controller
      *
      * @param  Request  $request
      * @return JsonResponse
+     * @OA\Post(
+     *     path="/login",
+     *     @OA\RequestBody(
+     *          required=true,
+     *       @OA\JsonContent(
+     *         type="object",
+     *         required={"email", "password"},
+     *          @OA\Property(
+     *              property="email",
+     *              type="string",
+     *              example="user1@example.com",
+     *              description="email"
+     *          ),
+     *          @OA\Property(
+     *              property="password",
+     *              type="string",
+     *              example="password",
+     *              description="password"
+     *          ),
+     *       )
+     *     ),
+     *     @OA\Response(
+     *      response="200",
+     *      description="login message",
+     *      @OA\JsonContent(
+     *          type="object",
+     *          @OA\Property(
+     *           property="message",
+     *           format="string",
+     *           example="message",
+     *           description="response message",
+     *         )
+     *      )
+     *   )
+     * )
      */
     public function login(Request $request): JsonResponse
     {
@@ -37,6 +72,22 @@ class CookieAuthenticationController extends Controller
     /**
      * @param Request $request
      * @return JsonResponse
+     * @OA\Post(
+     *     path="/logout",
+     *     @OA\Response(
+     *      response="200",
+     *      description="logout message",
+     *      @OA\JsonContent(
+     *          type="object",
+     *          @OA\Property(
+     *           property="message",
+     *           format="string",
+     *           example="message",
+     *           description="response message",
+     *         )
+     *      )
+     *   )
+     * )
      */
     public function logout(Request $request): JsonResponse
     {
