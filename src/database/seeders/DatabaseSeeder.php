@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Feed;
+use App\Models\FoodCatalog;
 use App\Models\User;
 use App\Models\Cat;
 use Illuminate\Database\Seeder;
@@ -22,6 +24,16 @@ class DatabaseSeeder extends Seeder
         // cats
         Cat::factory()->create([
             'user_id' => $user1->id,
+        ]);
+
+        // food
+        $food1 = FoodCatalog::factory()->create();
+        $food2 = FoodCatalog::factory()->create();
+
+        // feeds
+        Feed::factory()->create([
+            'user_id' => $user1->id,
+            'food_id' => $food1->id,
         ]);
     }
 }

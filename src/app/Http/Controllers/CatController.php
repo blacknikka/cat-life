@@ -148,7 +148,7 @@ class CatController extends Controller
      *           property="status",
      *           format="boolean",
      *           example=true,
-     *           description="updating succeeded or not",
+     *           description="delete succeeded or not",
      *         )
      *      )
      *   )
