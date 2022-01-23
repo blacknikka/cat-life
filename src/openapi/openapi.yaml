@@ -58,7 +58,7 @@ paths:
             application/json:
               schema:
                 properties:
-                  status: { description: 'updating succeeded or not', format: boolean, example: true }
+                  status: { description: 'delete succeeded or not', format: boolean, example: true }
                 type: object
     patch:
       summary: 'Update the specified resource in storage.'
@@ -115,6 +115,120 @@ paths:
                 properties:
                   message: { description: 'response message', format: string, example: message }
                 type: object
+  /api/feeds/:
+    post:
+      operationId: 3a28439a59c222391c847013ce70d881
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - served_at
+                - amount
+                - memo
+                - food_id
+              properties:
+                served_at:
+                  description: 'served at'
+                  type: string
+                  example: '2022-01-23 11:22:33'
+                amount:
+                  description: amount
+                  type: number
+                  format: float
+                  example: 50.11
+                memo:
+                  description: memo
+                  type: string
+                  example: 'something you want to take a memo'
+                food_id:
+                  description: 'food id'
+                  type: number
+                  example: 1
+              type: object
+      responses:
+        '200':
+          description: 'create specified feed'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FeedResource'
+  '/api/feeds/{id}':
+    get:
+      summary: 'Display the specified resource.'
+      operationId: 93d64c25c3d471aace28a9b999df098a
+      responses:
+        '200':
+          description: 'get specified feed'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FeedResource'
+        '400':
+          description: 'not found'
+          content:
+            application/json:
+              schema:
+                properties:
+                  message: { description: 'not found error', format: string, example: 'not found' }
+                type: object
+    delete:
+      summary: 'Remove the specified resource from storage.'
+      operationId: acd0827876b1e9d2827e83d5a1a6e04e
+      responses:
+        '200':
+          description: 'delete specified feed'
+          content:
+            application/json:
+              schema:
+                properties:
+                  status: { description: 'delete succeeded or not', format: boolean, example: true }
+                type: object
+    patch:
+      summary: 'Update the specified resource in storage.'
+      operationId: 099650bb6dcfe621de7499a0b6a5a1e1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required: []
+              properties:
+                food_id:
+                  description: 'food id'
+                  type: number
+                  example: 1
+                served_at:
+                  description: 'served at'
+                  type: string
+                  example: '2022-01-23 11:22:33'
+                amount:
+                  description: amount
+                  type: number
+                  example: 50.11
+                memo:
+                  description: memo
+                  type: string
+                  example: memo
+              type: object
+      responses:
+        '200':
+          description: 'update specified feed'
+          content:
+            application/json:
+              schema:
+                properties:
+                  status: { description: 'updating succeeded or not', format: boolean, example: true }
+                type: object
+        '400':
+          description: 'not found'
+          content:
+            application/json:
+              schema:
+                properties:
+                  message: { description: 'not found error', format: string, example: 'not found' }
+                type: object
   /api/me:
     get:
       operationId: 4b0f4f02e78d668f71a78b9c9f82dc03
@@ -151,6 +265,30 @@ components:
           format: string
           example: 'something you want to take a memo'
       type: object
+    FeedResource:
+      description: 'Transform the resource into an array.'
+      properties:
+        id:
+          title: ID
+          description: ID
+          format: int64
+          example: 1
+        served_at:
+          title: served_at
+          description: served_at
+          format: string
+          example: '2022-01-23 11:22:33'
+        amount:
+          title: amount
+          description: amount
+          format: float
+          example: '50.11'
+        memo:
+          title: memo
+          description: memo
+          format: string
+          example: 'something you want to take a memo'
+      type: object
     MeResource:
       description: 'Transform the resource into an array.'
       properties:
@@ -170,3 +308,15 @@ components:
           format: string
           example: user1@example.com
       type: object
+  responses:
+    '400':
+      description: 'failed to create'
+      content:
+        application/json:
+          schema:
+            properties:
+              message:
+                description: 'error message'
+                format: string
+                example: 'error message'
+            type: object

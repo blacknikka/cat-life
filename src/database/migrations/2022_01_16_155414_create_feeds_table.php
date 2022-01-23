@@ -16,9 +16,9 @@ class CreateFeedsTable extends Migration
         Schema::create('feeds', function (Blueprint $table) {
             $table->id();
 
-            $table->string('name', 255);
             $table->time('served_at');
             $table->float('amount');
+            $table->text('memo')->nullable()->default(null);
 
             // user ID
             $table->bigInteger('user_id')->unsigned()->nullable()->default(null);
