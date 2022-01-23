@@ -3,9 +3,127 @@ info:
   title: 'catlife API'
   version: '0.1'
 paths:
+  /api/cats/:
+    post:
+      summary: 'Store a newly created resource in storage.'
+      operationId: 1aa267fe99be0276c75a4bbe479ac733
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - name
+                - birth
+                - description
+              properties:
+                name:
+                  description: 'cat name'
+                  type: string
+                  example: 'cat name'
+                birth:
+                  description: 'cat''s birthday'
+                  type: string
+                  example: '2022-01-23 11:22:33'
+                description:
+                  description: 'cat''s description'
+                  type: string
+                  example: 'something you want to take a memo'
+              type: object
+      responses:
+        '200':
+          description: 'create specified cat'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CatResource'
+  '/api/cats/{id}':
+    get:
+      summary: 'Display the specified resource.'
+      operationId: eaa20273bdc90d751ce892bd1b1a946c
+      responses:
+        '200':
+          description: 'get specified cat'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CatResource'
+    delete:
+      summary: 'Remove the specified resource from storage.'
+      operationId: cf39966608b6cade9fdfac9999b6845d
+      responses:
+        '200':
+          description: 'delete specified cat'
+          content:
+            application/json:
+              schema:
+                properties:
+                  status: { description: 'updating succeeded or not', format: boolean, example: true }
+                type: object
+    patch:
+      summary: 'Update the specified resource in storage.'
+      operationId: 4f0717f96c20eeb7d072bbb881f83525
+      responses:
+        '200':
+          description: 'update specified cat'
+          content:
+            application/json:
+              schema:
+                properties:
+                  status: { description: 'updating succeeded or not', format: boolean, example: true }
+                type: object
   /api/me:
     get:
       operationId: 4b0f4f02e78d668f71a78b9c9f82dc03
       responses:
         '200':
-          description: 'Get login user'
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MeResource'
+components:
+  schemas:
+    CatResource:
+      description: 'Transform the resource into an array.'
+      properties:
+        id:
+          title: ID
+          description: ID
+          format: int64
+          example: 1
+        name:
+          title: name
+          description: name
+          format: string
+          example: 'cat name'
+        birth:
+          title: birth
+          description: 'birthday string'
+          format: string
+          example: '2022-01-23'
+        description:
+          title: description
+          description: description
+          format: string
+          example: 'something you want to take a memo'
+      type: object
+    MeResource:
+      description: 'Transform the resource into an array.'
+      properties:
+        id:
+          title: ID
+          description: ID
+          format: int64
+          example: 1
+        name:
+          title: name
+          description: name
+          format: string
+          example: 'my name'
+        email:
+          title: email
+          description: email
+          format: string
+          example: user1@example.com
+      type: object
