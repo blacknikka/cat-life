@@ -27,8 +27,12 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // food
-        $food1 = FoodCatalog::factory()->create();
-        $food2 = FoodCatalog::factory()->create();
+        $food1 = FoodCatalog::factory()->create([
+            'user_id' => $user1->id,
+        ]);
+        $food2 = FoodCatalog::factory()->create([
+            'user_id' => $user1->id,
+        ]);
 
         // feeds
         Feed::factory()->create([
