@@ -116,7 +116,7 @@ class CatController extends Controller
      *   )
      * )
      */
-    public function update(Request $request, Cat $cat)
+    public function update(Request $request, Cat $cat): JsonResponse
     {
         $this->authorize('update', $cat);
 
@@ -127,7 +127,7 @@ class CatController extends Controller
             "user_id" => Auth::id(),
         ]);
 
-        return JsonResponse([
+        return new JsonResponse([
             "status" => $status,
         ]);
     }
@@ -154,13 +154,13 @@ class CatController extends Controller
      *   )
      * )
      */
-    public function destroy(Cat $cat)
+    public function destroy(Cat $cat): JsonResponse
     {
         $this->authorize('delete', $cat);
 
         $status = $cat->delete();
 
-        return JsonResponse([
+        return new JsonResponse([
             "status" => $status,
         ]);
     }

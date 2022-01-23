@@ -72,6 +72,49 @@ paths:
                 properties:
                   status: { description: 'updating succeeded or not', format: boolean, example: true }
                 type: object
+  /login:
+    post:
+      summary: 認証の試行を処理
+      operationId: 4638966d0d9cb59b7274313673ab5f89
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  description: email
+                  type: string
+                  example: user1@example.com
+                password:
+                  description: password
+                  type: string
+                  example: password
+              type: object
+      responses:
+        '200':
+          description: 'login message'
+          content:
+            application/json:
+              schema:
+                properties:
+                  message: { description: 'response message', format: string, example: message }
+                type: object
+  /logout:
+    post:
+      operationId: bc7646632d757581b1408deec3ad2dd4
+      responses:
+        '200':
+          description: 'logout message'
+          content:
+            application/json:
+              schema:
+                properties:
+                  message: { description: 'response message', format: string, example: message }
+                type: object
   /api/me:
     get:
       operationId: 4b0f4f02e78d668f71a78b9c9f82dc03
