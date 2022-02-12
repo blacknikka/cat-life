@@ -19,7 +19,7 @@ class CreateCatsTable extends Migration
             $table->string('name', 255);
             $table->date('birth')->nullable();
             $table->text('description')->nullable();
-            $table->binary('picture')->nullable();
+            $table->text('picture')->nullable()->comment("path to the image");
 
             // user ID
             $table->bigInteger('user_id')->unsigned()->nullable()->default(null);;

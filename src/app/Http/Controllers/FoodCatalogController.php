@@ -18,7 +18,7 @@ class FoodCatalogController extends Controller
      */
     public function index()
     {
-        $this->authorize('index', FoodCatalog::class);
+        $this->authorize('viewAny', FoodCatalog::class);
 
         // do "index" is not allowed.
         return [];

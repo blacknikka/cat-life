@@ -41,4 +41,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * get the Cats which the user hss.
+     */
+    public function cats()
+    {
+        return $this->hasMany(Cat::class, 'user_id');
+    }
 }
