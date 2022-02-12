@@ -2,27 +2,51 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Cat\CatCreateRequest;
+use App\Http\Resources\Cat\CatCollection;
 use App\Http\Resources\Cat\CatResource;
-use App\Http\Resources\Cat\CatUpdateResource;
+use App\Services\S3Service;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Models\Cat;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 
 class CatController extends Controller
 {
     /**
+     * @var service for S3
+     */
+    private $s3service;
+
+    /**
+     * 新しいコントローラインスタンスの生成
+     *
+     * @param  UserRepository  $users
+     * @return void
+     */
+    public function __construct(S3Service $s3service)
+    {
+        $this->s3service = $s3service;
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+     * @OA\Get(
+     *     path="/api/cats",
+     *     @OA\Response(response="200", description="get all cats",@OA\JsonContent(ref="#/components/schemas/CatCollection")))
+     * )
      */
-    public function index()
+    public function index(): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
-        $this->authorize('index', Cat::class);
+        $this->authorize('viewAny', Cat::class);
 
-        // do "index" is not allowed.
-        return [];
+        return CatResource::collection(User::find(Auth::id())->cats);
     }
 
     /**
@@ -54,15 +78,47 @@ class CatController extends Controller
      *              type="string",
      *              example="something you want to take a memo",
      *              description="cat's description"
+     *          ),
+     *          @OA\Property(
+     *              property="picture",
+     *              type="string",
+     *              format="binary",
+     *              description="picture for the cat"
      *          )
      *       )
      *     ),
      *     @OA\Response(response="200", description="create specified cat",@OA\JsonContent(ref="#/components/schemas/CatResource")))
+     *     @OA\Response(response="500", description="failed to save a file",
+     *         @OA\JsonContent(
+     *         type="object",
+     *          @OA\Property(
+     *              property="message",
+     *              type="string",
+     *              example="Save file failed. Please try again later",
+     *              description="error message"
+     *          ),
+     *        ),
+     *     ))
      * )
      */
-    public function store(Request $request): CatResource
+    public function store(CatCreateRequest $request): CatResource|JsonResponse
     {
         $this->authorize('create', Cat::class);
+
+        // file
+        $s3path = '';
+        if ($request->has('image')) {
+            $validated = $request->safe()->only(['image']);
+
+            $s3path = $this->s3service->PutAFile(Auth::id() . "/upload", $validated["image"]);
+            if (!$s3path)
+            {
+                // put error
+                return new JsonResponse([
+                    "message" => "Save file failed. Please try again later",
+                ], 500);
+            }
+        }
 
         $cat = Cat::create(
             [
@@ -70,6 +126,8 @@ class CatController extends Controller
                 "birth" => new Carbon($request->input("birth")),
                 "description" => $request->input("description"),
                 "user_id" => Auth::id(),
+                "picture" => $s3path,
+
             ],
         );
 

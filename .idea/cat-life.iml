@@ -118,6 +118,10 @@
       <excludeFolder url="file://$MODULE_DIR$/src/vendor/doctrine/annotations" />
       <excludeFolder url="file://$MODULE_DIR$/src/vendor/symfony/yaml" />
       <excludeFolder url="file://$MODULE_DIR$/src/vendor/psr/cache" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/aws/aws-sdk-php" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/aws/aws-crt-php" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/league/flysystem-aws-s3-v3" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/mtdowling/jmespath.php" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

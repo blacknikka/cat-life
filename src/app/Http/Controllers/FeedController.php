@@ -20,7 +20,7 @@ class FeedController extends Controller
      */
     public function index(): JsonResponse
     {
-        $this->authorize('index', Feed::class);
+        $this->authorize('viewAny', Feed::class);
 
         // do "index" is not allowed.
         return new JsonResponse([]);

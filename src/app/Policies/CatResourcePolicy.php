@@ -18,8 +18,8 @@ class CatResourcePolicy
      */
     public function viewAny(User $user)
     {
-        // TODO: admin user can do viewAny
-        return false;
+        // everyone can view the list of cats they have
+        return true;
     }
 
     /**
