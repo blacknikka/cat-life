@@ -25,7 +25,7 @@ class S3Service
             return Storage::disk('s3')->get($path);
         } catch (\Exception $exception) {
             $message = $exception->getMessage();
-            Log::error("Failed to get a file ${$path}: ${$message}");
+            Log::error("Failed to get a file {$path}: {$message}");
             return null;
         }
     }
