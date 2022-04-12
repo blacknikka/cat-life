@@ -4,28 +4,29 @@ cat-life
 ### IDE-helper
 
 ```bash
-sail artisan ide-helper:model
+$ ide-helper
 ```
 
 ### build docker
 
 ```shell
 # app
-$ docker image build -f infra/docker/8.1/php/Dockerfile -t catlife-app .
+$ make build-app
 
 # nginx
-$ docker image build -f infra/docker/8.1/nginx/Dockerfile -t catlife-web .
+$ make build-web
 ```
 
 ### For development
 ```bash
-$ export WWWUSER=`id -g`; docker-compose up -d
+# up
+$ make up
 
-# indicate user
-$ docker-compose exec --user 1000 app bash
+# exec bash
+$ make bash
 ```
 
 ### openapi
 ```bash
-$ docker-compose exec --user 1000 app /work/backend/vendor/bin/openapi /work/backend/app/Http --format yaml --output /work/backend/openapi/openapi.yaml
+$ make generate-openapi
 ```
