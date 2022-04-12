@@ -12,4 +12,4 @@ build-web:
 generate-openapi:
 	export WWWUSER=`id -g`; docker-compose exec --user `id -g` app /work/backend/vendor/bin/openapi /work/backend/app/Http --format yaml --output /work/backend/openapi/openapi.yaml
 ide-helper:
-	sail artisan ide-helper:model
+	export WWWUSER=`id -g`; docker-compose exec --user `id -g` app php artisan ide-helper:model

@@ -4,7 +4,7 @@ cat-life
 ### IDE-helper
 
 ```bash
-$ ide-helper
+$ make ide-helper
 ```
 
 ### build docker
