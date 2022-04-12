@@ -8,6 +8,33 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 
+/**
+ * App\Models\Feed
+ *
+ * @property int $id
+ * @property string $served_at
+ * @property float $amount
+ * @property string|null $memo
+ * @property int|null $user_id
+ * @property int|null $food_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read FoodCatalog|null $food
+ * @property-read User|null $user
+ * @method static \Database\Factories\FeedFactory factory(...$parameters)
+ * @method static \Illuminate\Database\Eloquent\Builder|Feed newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Feed newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Feed query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Feed whereAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Feed whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Feed whereFoodId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Feed whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Feed whereMemo($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Feed whereServedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Feed whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Feed whereUserId($value)
+ * @mixin \Eloquent
+ */
 class Feed extends Model
 {
     use HasFactory;
