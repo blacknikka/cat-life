@@ -31,7 +31,7 @@ class FeedResourcePolicy
      */
     public function view(User $user, Feed $feed)
     {
-        return $user->id === $feed->user->id;
+        return $user->id === $feed->cat->user->id;
     }
 
     /**
@@ -55,7 +55,7 @@ class FeedResourcePolicy
      */
     public function update(User $user, Feed $feed)
     {
-        return $user->id === $feed->user->id;
+        return $user->id === $feed->cat->user->id;
     }
 
     /**
@@ -67,7 +67,7 @@ class FeedResourcePolicy
      */
     public function delete(User $user, Feed $feed)
     {
-        return $user->id === $feed->user->id;
+        return $user->id === $feed->cat->user->id;
     }
 
     /**

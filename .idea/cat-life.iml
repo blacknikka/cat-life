@@ -122,6 +122,12 @@
       <excludeFolder url="file://$MODULE_DIR$/src/vendor/aws/aws-crt-php" />
       <excludeFolder url="file://$MODULE_DIR$/src/vendor/league/flysystem-aws-s3-v3" />
       <excludeFolder url="file://$MODULE_DIR$/src/vendor/mtdowling/jmespath.php" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/barryvdh/reflection-docblock" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/barryvdh/laravel-ide-helper" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/doctrine/deprecations" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/doctrine/event-manager" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/doctrine/dbal" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/doctrine/cache" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
+use App\Models\Feed;
 
 /**
  * App\Models\Cat
@@ -60,5 +61,13 @@ class Cat extends Model
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * the user has many Feeds data.
+     */
+    public function feeds(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Feed::class);
     }
 }

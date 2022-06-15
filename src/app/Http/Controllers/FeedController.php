@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\Feed\FeedResource;
 use App\Models\Feed;
+use App\Models\Cat;
 use App\Models\FoodCatalog;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
@@ -24,6 +25,19 @@ class FeedController extends Controller
 
         // do "index" is not allowed.
         return new JsonResponse([]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return  \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
+    public function feeds($id):  \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+    {
+        $feeds = Auth::user()->cat($id)->feeds;
+
+        // do "index" is not allowed.
+        return FeedResource::collection($feeds);
     }
 
     /**

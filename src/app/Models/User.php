@@ -76,8 +76,16 @@ class User extends Authenticatable
     /**
      * get the Cats which the user hss.
      */
-    public function cats()
+    public function cats(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Cat::class, 'user_id');
+    }
+
+    /**
+     * get the Cat
+     */
+    public function cat($id): Cat | null
+    {
+        return Cat::find($id);
     }
 }

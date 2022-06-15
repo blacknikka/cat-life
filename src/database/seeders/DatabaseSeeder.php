@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
         User::factory()->create(['email' => 'user3@example.com']);
 
         // cats
-        Cat::factory()->create([
+        $cat = Cat::factory()->create([
             'user_id' => $user1->id,
         ]);
 
@@ -36,7 +36,7 @@ class DatabaseSeeder extends Seeder
 
         // feeds
         Feed::factory()->create([
-            'user_id' => $user1->id,
+            'cat_id' => $cat->id,
             'food_id' => $food1->id,
         ]);
     }
