@@ -32,6 +32,8 @@ use App\Models\Feed;
  * @method static \Illuminate\Database\Eloquent\Builder|Cat whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Cat whereUserId($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|Feed[] $feeds
+ * @property-read int|null $feeds_count
  */
 class Cat extends Model
 {
