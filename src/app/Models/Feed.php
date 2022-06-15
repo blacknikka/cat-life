@@ -34,6 +34,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Feed whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Feed whereUserId($value)
  * @mixin \Eloquent
+ * @property int|null $cat_id
+ * @property-read Cat|null $cat
+ * @method static \Illuminate\Database\Eloquent\Builder|Feed whereCatId($value)
  */
 class Feed extends Model
 {
