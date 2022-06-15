@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\User;
+use App\Models\Cat;
 use App\Models\FoodCatalog;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -48,7 +48,7 @@ class Feed extends Model
         'served_at',
         'amount',
         'memo',
-        'user_id',
+        'cat_id',
         'food_id',
     ];
 
@@ -58,11 +58,11 @@ class Feed extends Model
     protected $table = 'feeds';
 
     /**
-     * get the User who has this feed information.
+     * get the Cat who has this feed information.
      */
-    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function cat(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Cat::class);
     }
 
     /**

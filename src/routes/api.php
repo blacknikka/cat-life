@@ -19,8 +19,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::apiResource('cats', App\Http\Controllers\CatController::class)
         ->except(['create', 'edit']);
+
     Route::apiResource('feeds', App\Http\Controllers\FeedController::class)
         ->except(['create', 'edit']);
+    Route::get('/feeds-list/{id}', [App\Http\Controllers\FeedController::class, 'feeds']);
+
     Route::apiResource('food_catalogs', App\Http\Controllers\FoodCatalogController::class)
         ->except(['create', 'edit']);
 
