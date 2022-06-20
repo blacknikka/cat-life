@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // feeds
-        Feed::factory()->create([
+        Feed::factory()->who($user1->id)->count(2)->create([
             'cat_id' => $cat->id,
             'food_id' => $food1->id,
         ]);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\Feed\FeedListResource;
 use App\Http\Resources\Feed\FeedResource;
 use App\Models\Feed;
 use App\Models\Cat;
@@ -10,6 +11,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 
 class FeedController extends Controller
@@ -32,12 +34,16 @@ class FeedController extends Controller
      *
      * @return  \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function feeds($id):  \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+    public function feeds($id) : Collection
     {
-        $feeds = Auth::user()->cat($id)->feeds;
-
-        // do "index" is not allowed.
-        return FeedResource::collection($feeds);
+        $user = Auth::user();
+        return Feed::with(['food', 'cat'])
+            ->whereHas('cat', fn ($q) => $q->where('user_id' ,$user->id))
+            ->where('cat_id', $id)
+            ->get()
+            ->map(function ($f) {
+                return new FeedListResource($f);
+            });
     }
 
     /**
