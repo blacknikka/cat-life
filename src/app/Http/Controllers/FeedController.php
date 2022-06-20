@@ -37,12 +37,26 @@ class FeedController extends Controller
     public function feeds($id) : Collection
     {
         $user = Auth::user();
-        return Feed::with(['food', 'cat'])
+        $feeds = Feed::with(['food', 'cat'])
             ->whereHas('cat', fn ($q) => $q->where('user_id' ,$user->id))
             ->where('cat_id', $id)
-            ->get()
+            ->get();
+
+        return $feeds
             ->map(function ($f) {
-                return new FeedListResource($f);
+                return new FeedListResource(array_merge(
+                    $f->toArray(),
+                    [
+                        'food' => [
+                            $f->food->name,
+                            $f->food->maker,
+                            $f->food->calorie,
+                            $f->food->memo,
+                            $f->food->picture,
+                            $f->food->url
+                        ],
+                    ],
+                ));
             });
     }
 

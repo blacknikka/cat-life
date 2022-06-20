@@ -30,6 +30,10 @@ class ModifyFeedsTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('feeds', function (Blueprint $table) {
+            // user ID
+            $table->bigInteger('user_id')->unsigned()->nullable()->default(null);
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+        });
     }
 }

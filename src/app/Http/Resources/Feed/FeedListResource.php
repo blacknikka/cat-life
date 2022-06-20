@@ -6,6 +6,10 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class FeedListResource extends JsonResource
 {
+    public function __get( $name ) {
+        return $this->resource[$name];
+    }
+
     /**
      * Transform the resource into an array.
      *
@@ -19,6 +23,7 @@ class FeedListResource extends JsonResource
             "served_at" => $this->served_at,
             "amount" => $this->amount,
             "memo" => $this->memo,
+            "food" => $this->food,
         ];
     }
 }
