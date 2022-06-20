@@ -22,7 +22,7 @@ class FeedFactory extends Factory
         $user = $this->user ?: User::factory()->create();
 
         return [
-            'served_at' => $this->faker->time(),
+            'served_at' => $this->faker->dateTimeBetween('-1 week', 'now'),
             'amount' => $this->faker->randomFloat(2, 5, 50),
             'memo' => $this->faker->sentence(10),
             'food_id' => FoodCatalog::factory(
