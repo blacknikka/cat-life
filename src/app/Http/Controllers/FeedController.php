@@ -48,6 +48,7 @@ class FeedController extends Controller
                     $f->toArray(),
                     [
                         'food' => [
+                            'id' => $f->food->id,
                             'name' => $f->food->name,
                             'maker' => $f->food->maker,
                             'calorie' => $f->food->calorie,
