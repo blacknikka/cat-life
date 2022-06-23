@@ -127,7 +127,6 @@ class CatController extends Controller
                 "description" => $request->input("description"),
                 "user_id" => Auth::id(),
                 "picture" => $s3path,
-
             ],
         );
 

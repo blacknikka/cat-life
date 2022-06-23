@@ -39,6 +39,12 @@ class CreateFeedsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('feed');
+        Schema::table('feeds', function (Blueprint $table) {
+            $table->dropForeign('feeds_user_id_foreign');
+        });
+        Schema::table('feeds', function (Blueprint $table) {
+            $table->dropForeign('feeds_food_id_foreign');
+        });
+        Schema::dropIfExists('feeds');
     }
 }

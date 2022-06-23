@@ -36,6 +36,9 @@ class CreateCatsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cat');
+        Schema::table('cats', function (Blueprint $table) {
+            $table->dropForeign('cats_user_id_foreign');
+        });
+        Schema::dropIfExists('cats');
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Cat;
 
 use App\Services\S3Service;
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class CatResource extends JsonResource
@@ -41,7 +42,7 @@ class CatResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'birth' => $this->birth,
+            'birth' => (new Carbon($this->birth))->toIso8601String(),
             'description' => $this->description,
             'picture' => $picture,
         ];
