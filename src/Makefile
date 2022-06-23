@@ -2,7 +2,7 @@
 up:
 	export WWWUSER=`id -g`; docker-compose up -d
 bash:
-	export WWWUSER=$(WWWUSER); docker-compose exec app bash
+	export WWWUSER=`id -g`; docker-compose exec --user www-data app bash
 down:
 	docker-compose down
 build-app:
