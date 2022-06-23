@@ -39,6 +39,9 @@ class CreateFoodCatalogsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('food_catalog');
+        Schema::table('food_catalogs', function (Blueprint $table) {
+            $table->dropForeign('food_catalogs_user_id_foreign');
+        });
+        Schema::dropIfExists('food_catalogs');
     }
 }
