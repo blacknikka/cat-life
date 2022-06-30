@@ -22,7 +22,7 @@ class CatControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $user = User::factory()->create();
+        User::factory()->create();
 
     }
 
@@ -33,16 +33,15 @@ class CatControllerTest extends TestCase
      */
     public function test_Catのcreate_without_picture()
     {
+        $now = Carbon::now();
+
         $cat = [
             'name' => 'my-cat',
-            'birth' =>  (Carbon::now())->toIso8601String(),
+            'birth' =>  $now->toIso8601String(),
             'description' => 'description',
         ];
 
-        // skip auth process
-//        $this->withoutAuthorization();
-
-        Sanctum::actingAs(User::first());
+        Sanctum::actingAs($user = User::first());
 
         $response = $this->post('/api/cats', $cat);
 
@@ -56,5 +55,15 @@ class CatControllerTest extends TestCase
                     ],
                 )
             ]);
+
+        $created = $response->json();
+
+        $this->assertDatabaseHas('cats', [
+            'id' => $created['data']['id'],
+            'name' => $cat['name'],
+            'birth' => $now->format('Y-m-d'),
+            'user_id' => $user->id,
+            'picture' => '',
+        ]);
     }
 }
