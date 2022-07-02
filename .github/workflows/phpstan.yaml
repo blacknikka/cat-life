@@ -1,9 +1,6 @@
 name: larastan
 
-on:
-  pull_request:
-    paths:
-      - "**.php"
+on: push
 
 jobs:
   laravel:
