@@ -1,6 +1,7 @@
 name: larastan
 
-on: [push, merge]
+on:
+  push
 
 jobs:
   laravel:
