@@ -5,7 +5,10 @@ parameters:
 
     paths:
         - app
+        - config
         - tests
+        - database
+        - routes
 
     # The level 9 is the highest level
     level: 0
