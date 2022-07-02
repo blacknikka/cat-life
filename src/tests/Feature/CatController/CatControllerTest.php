@@ -131,4 +131,74 @@ class CatControllerTest extends TestCase
                 ],
             ]);
     }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function test_Catのupdate_without_picture_正常系()
+    {
+        $user = User::first();
+
+        Sanctum::actingAs($user);
+        $cats = Cat::factory()->count(3)->create([
+            'user_id' => $user->id,
+        ]);
+
+        $updateWith = [
+            "name" => "xyz",
+            "birth" => (Carbon::tomorrow())->toIso8601String(),
+            "description" => "updated",
+        ];
+        $updateResponse = $this->patch("/api/cats/{$cats[0]->id}", $updateWith);
+
+        $updateResponse
+            ->assertStatus(200)
+            ->assertJson([
+                "status" => true,
+            ]);
+
+        $this->assertDatabaseHas('cats', [
+            'id' => $cats[0]->id,
+            'name' => $updateWith["name"],
+            'birth' => $updateWith["birth"],
+            'user_id' => $user->id,
+            'picture' => '',
+        ]);
+    }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function test_Catのdestroy_正常系()
+    {
+        $user = User::first();
+
+        Sanctum::actingAs($user);
+        $cats = Cat::factory()->count(3)->create([
+            'user_id' => $user->id,
+        ]);
+
+        $target = ($this->get("/api/cats/{$cats[0]->id}"))->json();
+
+        $response = $this->delete("/api/cats/{$cats[0]->id}");
+
+        $response
+            ->assertStatus(200)
+            ->assertJson([
+                "status" => true,
+            ]);
+
+        $this->assertDatabaseMissing('cats', [
+            'id' => $cats[0]->id,
+            'name' => $target["data"]["name"],
+            'birth' => $target["data"]["birth"],
+            'description' => $target["data"]["description"],
+            'user_id' => $user->id,
+            'picture' => '',
+        ]);
+    }
 }
