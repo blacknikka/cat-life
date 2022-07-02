@@ -13,3 +13,5 @@ generate-openapi:
 	export WWWUSER=`id -g`; docker-compose exec --user `id -g` app /work/backend/vendor/bin/openapi /work/backend/app/Http --format yaml --output /work/backend/openapi/openapi.yaml
 ide-helper:
 	export WWWUSER=`id -g`; docker-compose exec --user `id -g` app php artisan ide-helper:model
+phpstan:
+	./vendor/bin/phpstan analyse --memory-limit=2G --configuration=phpstan.neon
