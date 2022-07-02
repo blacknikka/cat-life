@@ -128,6 +128,13 @@
       <path value="$PROJECT_DIR$/src/vendor/doctrine/event-manager" />
       <path value="$PROJECT_DIR$/src/vendor/doctrine/dbal" />
       <path value="$PROJECT_DIR$/src/vendor/doctrine/cache" />
+      <path value="$PROJECT_DIR$/src/vendor/phpstan/phpstan" />
+      <path value="$PROJECT_DIR$/src/vendor/seld/phar-utils" />
+      <path value="$PROJECT_DIR$/src/vendor/seld/jsonlint" />
+      <path value="$PROJECT_DIR$/src/vendor/react/promise" />
+      <path value="$PROJECT_DIR$/src/vendor/justinrainbow/json-schema" />
+      <path value="$PROJECT_DIR$/src/vendor/symfony/filesystem" />
+      <path value="$PROJECT_DIR$/src/vendor/nunomaduro/larastan" />
     </include_path>
   </component>
   <component name="PhpInterpreters">
