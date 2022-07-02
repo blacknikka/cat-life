@@ -43,6 +43,7 @@ RUN mkdir -p storage/framework/cache/data && \
     mkdir -p /home/www-data && \
     usermod -d /home/www-data www-data && \
     chown -R www-data:www-data /home/www-data && \
+    chown -R www-data:www-data /composer/ && \
     composer install
 
 # install xdebug
