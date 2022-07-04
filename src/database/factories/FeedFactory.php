@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Cat;
 use App\Models\Feed;
 use App\Models\FoodCatalog;
 use App\Models\User;
@@ -25,6 +26,11 @@ class FeedFactory extends Factory
             'served_at' => $this->faker->dateTimeBetween('-1 week', 'now'),
             'amount' => $this->faker->randomFloat(2, 5, 50),
             'memo' => $this->faker->sentence(10),
+            'cat_id' => Cat::factory(
+                [
+                    'user_id' => $user->id,
+                ]
+            ),
             'food_id' => FoodCatalog::factory(
                 [
                     'user_id' => $user->id,
