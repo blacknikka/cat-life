@@ -225,4 +225,43 @@ class FeedControllerTest extends TestCase
                 'message' => FeedController::FOODCATALOG_NOT_FOUND_MESSAGE,
             ]);
     }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function test_delete_正常系()
+    {
+        $feed = Feed::factory()->who(User::first()->id)->create();
+
+        Sanctum::actingAs(User::first());
+
+        $response = $this->delete("/api/feeds/{$feed->id}");
+
+        $response
+            ->assertStatus(200)
+            ->assertJson([
+                'status' => true,
+            ]);
+
+        $this->assertDatabaseMissing("feeds", [
+            "id" => $feed->id,
+        ]);
+    }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function test_delete_異常系()
+    {
+        Sanctum::actingAs(User::first());
+
+        $response = $this->delete("/api/feeds/1000");
+
+        $response
+            ->assertStatus(404);
+    }
 }
