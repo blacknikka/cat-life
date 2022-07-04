@@ -129,4 +129,100 @@ class FeedControllerTest extends TestCase
         $response
             ->assertStatus(404);
     }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function test_update_正常系_food_idなし()
+    {
+        $feed = Feed::factory()->who(User::first()->id)->create();
+
+        $update = [
+            'served_at' => Carbon::tomorrow()->toJSON(),
+            'amount' => 10000,
+            'memo' => 'updated my memo',
+        ];
+
+        Sanctum::actingAs(User::first());
+
+        $response = $this->patch("/api/feeds/{$feed->id}", $update);
+
+        $response
+            ->assertStatus(200)
+            ->assertJson([
+                'status' => true,
+            ]);
+
+        $this->assertDatabaseHas('feeds', [
+            'id' => $feed->id,
+            'served_at' => $update["served_at"],
+            'amount' => $update["amount"],
+            'memo' => $update["memo"],
+        ]);
+    }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function test_update_正常系_food_idあり()
+    {
+        $feed = Feed::factory()->who(User::first()->id)->create();
+        $food = FoodCatalog::first();
+
+        $update = [
+            "food_id" => $food->id,
+            'served_at' => Carbon::tomorrow()->toJSON(),
+            'amount' => 10000,
+            'memo' => 'updated my memo',
+        ];
+
+        Sanctum::actingAs(User::first());
+
+        $response = $this->patch("/api/feeds/{$feed->id}", $update);
+
+        $response
+            ->assertStatus(200)
+            ->assertJson([
+                'status' => true,
+            ]);
+
+        $this->assertDatabaseHas('feeds', [
+            'id' => $feed->id,
+            'served_at' => $update["served_at"],
+            'amount' => $update["amount"],
+            'memo' => $update["memo"],
+            "food_id" => $update["food_id"],
+        ]);
+    }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function test_update_異常系_food_id存在しない()
+    {
+        $feed = Feed::factory()->who(User::first()->id)->create();
+
+        $update = [
+            "food_id" => 1000,
+            'served_at' => Carbon::tomorrow()->toJSON(),
+            'amount' => 10000,
+            'memo' => 'updated my memo',
+        ];
+
+        Sanctum::actingAs(User::first());
+
+        $response = $this->patch("/api/feeds/{$feed->id}", $update);
+
+        $response
+            ->assertStatus(400)
+            ->assertJson([
+                'message' => FeedController::FOODCATALOG_NOT_FOUND_MESSAGE,
+            ]);
+    }
 }

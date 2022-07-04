@@ -264,7 +264,7 @@ class FeedController extends Controller
                 ]);
             } catch (ModelNotFoundException $e) {
                 return new JsonResponse([
-                    "message" => "food_id not found",
+                    "message" => self::FOODCATALOG_NOT_FOUND_MESSAGE,
                 ], 400);
             }
         }
