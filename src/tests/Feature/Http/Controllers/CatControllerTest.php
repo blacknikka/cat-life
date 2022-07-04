@@ -1,16 +1,11 @@
 <?php
 
-namespace Tests\Feature\CatController;
+namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Cat;
 use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
@@ -18,13 +13,10 @@ class CatControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    private $xsrf_token = '';
-
     public function setUp(): void
     {
         parent::setUp();
         User::factory()->create();
-
     }
 
     /**
@@ -32,7 +24,7 @@ class CatControllerTest extends TestCase
      *
      * @return void
      */
-    public function test_Catのcreate_without_picture_正常系()
+    public function test_Catのstore_without_picture_正常系()
     {
         $now = Carbon::now();
 

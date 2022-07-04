@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Auth;
 
 class FeedController extends Controller
 {
+    const FOODCATALOG_NOT_FOUND_MESSAGE = "food_id not found";
+
     /**
      * Display a listing of the resource.
      *
@@ -135,7 +137,7 @@ class FeedController extends Controller
             return new FeedResource($feed);
         } catch (ModelNotFoundException $e) {
             return new JsonResponse([
-                "message" => "food_id not found",
+                "message" => self::FOODCATALOG_NOT_FOUND_MESSAGE,
             ], 400);
         }
     }
