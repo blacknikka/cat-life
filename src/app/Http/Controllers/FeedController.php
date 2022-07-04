@@ -16,6 +16,9 @@ use Illuminate\Support\Facades\Auth;
 
 class FeedController extends Controller
 {
+    const FOODCATALOG_NOT_FOUND_MESSAGE = "food_id not found";
+    const FEED_NOT_FOUND_MESSAGE = "feed not found";
+
     /**
      * Display a listing of the resource.
      *
@@ -135,7 +138,7 @@ class FeedController extends Controller
             return new FeedResource($feed);
         } catch (ModelNotFoundException $e) {
             return new JsonResponse([
-                "message" => "food_id not found",
+                "message" => self::FOODCATALOG_NOT_FOUND_MESSAGE,
             ], 400);
         }
     }
@@ -171,8 +174,9 @@ class FeedController extends Controller
         try {
             return new FeedResource(Feed::find($feed->id));
         } catch (ModelNotFoundException $e) {
+            // Feedが存在しないときには自動的に404が返るので、実質的にここには来ない
             return new JsonResponse([
-                "message" => "feed not found",
+                "message" => self::FEED_NOT_FOUND_MESSAGE,
             ], 400);
         }
     }
@@ -260,7 +264,7 @@ class FeedController extends Controller
                 ]);
             } catch (ModelNotFoundException $e) {
                 return new JsonResponse([
-                    "message" => "food_id not found",
+                    "message" => self::FOODCATALOG_NOT_FOUND_MESSAGE,
                 ], 400);
             }
         }
