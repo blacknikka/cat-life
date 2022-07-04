@@ -3,6 +3,7 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Http\Controllers\FeedController;
+use App\Models\Cat;
 use App\Models\Feed;
 use App\Models\FoodCatalog;
 use App\Models\User;
@@ -23,6 +24,53 @@ class FeedControllerTest extends TestCase
         // create necessary data.
         User::factory()->create();
         FoodCatalog::factory()->create();
+    }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function test_feeds_正常系()
+    {
+        // データ準備する
+        $cats = Cat::factory([
+            "user_id" => User::first(),
+        ])->count(5)->create();
+
+        $feeds = Feed::factory([
+            "cat_id" => $cats->first()->id,
+        ])->who(User::first()->id)->count(2)->create();
+
+        Sanctum::actingAs(User::first());
+
+        $cat_id = User::first()->cats->first()->id;
+        $response = $this->get("/api/feeds-list/{$cat_id}");
+
+        $response
+            ->assertStatus(200)
+            ->assertJson($feeds->map(function ($f) {
+                $food = FoodCatalog::find($f->food_id);
+                return array_merge(
+                    [
+                        "id" => $f->id,
+                        "served_at" => (new Carbon($f->served_at))->toDateTimeString(),
+                        "amount" => $f->amount,
+                        "memo" => $f->memo,
+                    ],
+                    [
+                        "food" => [
+                            'id' => $food->id,
+                            'name' => $food->name,
+                            'maker' => $food->maker,
+                            'calorie' => $food->calorie,
+                            'memo' => $food->memo,
+                            'picture' => $food->picture,
+                            'url' => $food->url
+                        ],
+                    ],
+                );
+            })->toArray());
     }
 
     /**
