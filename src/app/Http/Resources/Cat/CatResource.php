@@ -18,8 +18,8 @@ class CatResource extends JsonResource
      *      @OA\Property(format="int64", title="ID", description="ID", property="id", example=1),
      *      @OA\Property(format="string", title="name", description="name", property="name", example="cat name"),
      *      @OA\Property(format="string", title="birth", description="birthday string", property="birth", example="2022-01-23"),
-     *      @OA\Property(format="string", title="description", description="description", property="description", example="something you want to take a memo")
-     *      @OA\Property(format="string", title="picture", description="picture which is encoded with base64 format", property="picture", example="hogehoge")
+     *      @OA\Property(format="string", title="description", description="description", property="description", example="something you want to take a memo"),
+     *      @OA\Property(format="string", title="picture", description="picture which is encoded with base64 format", property="picture", example="hogehoge"),
      * )
      */
     public function toArray($request)

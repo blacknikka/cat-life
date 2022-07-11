@@ -3,19 +3,9 @@ info:
   title: 'catlife API'
   version: '0.1'
 paths:
-  /api/cats:
-    get:
-      summary: 'Display a listing of the resource.'
-      operationId: 37b784597020a23064dfd2b60befdd41
-      responses:
-        '200':
-          description: 'get all cats'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CatCollection'
   /api/cats/:
     post:
+      summary: 'Store a newly created resource in storage.'
       operationId: 1aa267fe99be0276c75a4bbe479ac733
       requestBody:
         required: true
@@ -32,11 +22,11 @@ paths:
                   type: string
                   example: 'cat name'
                 birth:
-                  description: 'cat''s birthday'
+                  description: "cat's birthday"
                   type: string
                   example: '2022-01-23 11:22:33'
                 description:
-                  description: 'cat''s description'
+                  description: "cat's description"
                   type: string
                   example: 'something you want to take a memo'
                 picture:
@@ -131,6 +121,7 @@ paths:
                 type: object
   /api/feeds/:
     post:
+      summary: 'Store a newly created resource in storage.'
       operationId: 3a28439a59c222391c847013ce70d881
       requestBody:
         required: true
@@ -358,8 +349,8 @@ paths:
                 $ref: '#/components/schemas/MeResource'
 components:
   schemas:
+    CatCollection: {  }
     CatResource:
-      description: 'Transform the resource into an array.'
       properties:
         id:
           title: ID
@@ -381,9 +372,13 @@ components:
           description: description
           format: string
           example: 'something you want to take a memo'
+        picture:
+          title: picture
+          description: 'picture which is encoded with base64 format'
+          format: string
+          example: hogehoge
       type: object
     FeedResource:
-      description: 'Transform the resource into an array.'
       properties:
         id:
           title: ID
@@ -407,7 +402,6 @@ components:
           example: 'something you want to take a memo'
       type: object
     FoodCatalogResource:
-      description: 'Transform the resource into an array.'
       properties:
         id:
           description: 'food id'
@@ -435,7 +429,6 @@ components:
           example: 'https://example.com/product/1'
       type: object
     MeResource:
-      description: 'Transform the resource into an array.'
       properties:
         id:
           title: ID
