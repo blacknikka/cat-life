@@ -39,7 +39,12 @@ class CatController extends Controller
      * @return \Illuminate\Http\Response
      * @OA\Get(
      *     path="/api/cats",
-     *     @OA\Response(response="200", description="get all cats",@OA\JsonContent(ref="#/components/schemas/CatCollection")))
+     *     @OA\Response(response="200", description="get all cats",@OA\JsonContent(ref="#/components/schemas/CatCollection"))),
+     * )
+     */
+    /**
+     * @OA\Schema(
+     *      schema="CatCollection",
      * )
      */
     public function index(): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
@@ -136,7 +141,7 @@ class CatController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $id
+     * @param App\Models\Cat $cat
      * @return \Illuminate\Http\Response
      * @OA\Get(
      *     path="/api/cats/{id}",
