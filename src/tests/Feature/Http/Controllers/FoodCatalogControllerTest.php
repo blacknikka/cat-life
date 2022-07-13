@@ -61,4 +61,40 @@ class FoodCatalogControllerTest extends TestCase
                 "data" => $contents
             ]);
     }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function test_show_正常系()
+    {
+        $user = User::first();
+        $foodCatalog = FoodCatalog::factory()->create([
+            "user_id" => $user->id,
+        ]);
+
+        Sanctum::actingAs(User::first());
+
+        $response = $this->get(self::API_BASE . "/$foodCatalog->id");
+        $response
+            ->assertStatus(200)
+            ->assertJson([
+                "data" => (new FoodCatalogResource($foodCatalog))->resolve()
+            ]);
+    }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function test_show_異常系_foodCatalog存在しない()
+    {
+        Sanctum::actingAs(User::first());
+
+        $response = $this->get(self::API_BASE . "/0");
+        $response
+            ->assertStatus(404);
+    }
 }
