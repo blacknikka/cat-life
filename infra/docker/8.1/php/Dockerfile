@@ -15,6 +15,11 @@ COPY --from=composer:2.1 /usr/bin/composer /usr/bin/composer
 
 RUN apt-get update && \
   apt-get -y install git libicu-dev libonig-dev libzip-dev unzip locales && \
+  # install gd library (with jpeg, and webp)
+  apt-get install -y zlib1g-dev libpng-dev libjpeg62-turbo-dev libwebp-dev && \
+  docker-php-ext-configure gd --with-jpeg --with-webp && \
+  docker-php-ext-install -j$(nproc) gd && \
+  # clean
   apt-get clean && \
   rm -rf /var/lib/apt/lists/* && \
   locale-gen en_US.UTF-8 && \

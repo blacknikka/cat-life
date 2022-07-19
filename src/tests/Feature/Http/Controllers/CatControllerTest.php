@@ -6,6 +6,7 @@ use App\Models\Cat;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
@@ -13,10 +14,17 @@ class CatControllerTest extends TestCase
 {
     use RefreshDatabase;
 
+    private User $user;
+    private Cat $cat;
+
     public function setUp(): void
     {
         parent::setUp();
-        User::factory()->create();
+
+        $this->user = User::factory()->create()->first();
+        $this->cat = Cat::factory()->create([
+            "user_id" => $this->user->id,
+        ])->first();
     }
 
     /**
@@ -72,6 +80,8 @@ class CatControllerTest extends TestCase
         $cats = Cat::factory()->count(3)->create([
             'user_id' => $user->id,
         ]);
+
+        $cats = collect([$this->cat])->concat($cats);
 
         $response = $this->get('/api/cats');
 
