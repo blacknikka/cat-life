@@ -17,13 +17,19 @@ class FoodCatalogControllerTest extends TestCase
 
     const API_BASE = "api/food_catalogs";
 
+    private User $user;
+    private FoodCatalog $foodCatalog;
+
     public function setUp(): void
     {
         parent::setUp();
 
         // create necessary data.
-        User::factory()->create();
-        FoodCatalog::factory()->create();
+        $this->user = User::factory()->create()->first();
+
+        $this->foodCatalog = FoodCatalog::factory()->create([
+            "user_id" => $this->user->id,
+        ])->first();
     }
 
     /**
@@ -70,10 +76,7 @@ class FoodCatalogControllerTest extends TestCase
      */
     public function test_show_正常系()
     {
-        $user = User::first();
-        $foodCatalog = FoodCatalog::factory()->create([
-            "user_id" => $user->id,
-        ]);
+        $foodCatalog = $this->foodCatalog;
 
         Sanctum::actingAs(User::first());
 
@@ -106,10 +109,7 @@ class FoodCatalogControllerTest extends TestCase
      */
     public function test_update_正常系()
     {
-        $user = User::first();
-        $foodCatalog = FoodCatalog::factory()->create([
-            "user_id" => $user->id,
-        ]);
+        $foodCatalog = $this->foodCatalog;
 
         Sanctum::actingAs(User::first());
 
@@ -137,5 +137,52 @@ class FoodCatalogControllerTest extends TestCase
             ->assertStatus(200);
 
         $this->assertDatabaseHas("food_catalogs", $update);
+    }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function test_update_異常系_id存在しない()
+    {
+        Sanctum::actingAs(User::first());
+
+        $response = $this->patch(self::API_BASE . "/1000", []);
+
+        $response
+            ->assertStatus(404);
+    }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function test_destroy_正常系()
+    {
+        Sanctum::actingAs($this->user);
+
+        $foodCatalog = $this->foodCatalog;
+
+        $this->assertDatabaseHas(
+            "food_catalogs",
+            array_merge(
+                $foodCatalog->toArray(),
+                [
+                    "is_master" => $foodCatalog["is_master"] ? 1 : 0,
+                    "created_at" => (new Carbon($foodCatalog["created_at"]))->toDateTimeString(),
+                    "updated_at" => (new Carbon($foodCatalog["updated_at"]))->toDateTimeString(),
+                ],
+            ));
+
+        $response = $this->delete(self::API_BASE . "/$foodCatalog->id");
+
+        $response
+            ->assertStatus(200);
+
+        $this->assertDatabaseMissing("food_catalogs", [
+            "id" => $foodCatalog->id,
+        ]);
     }
 }
