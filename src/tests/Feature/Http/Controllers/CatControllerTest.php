@@ -7,6 +7,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
@@ -66,6 +67,56 @@ class CatControllerTest extends TestCase
             'user_id' => $user->id,
             'picture' => '',
         ]);
+    }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function test_Catのstore_with_picture_正常系()
+    {
+        $now = Carbon::now();
+
+        $image = UploadedFile::fake()->image('cat.jpeg');
+        $base64 = 'data:image/jpg;base64,' . base64_encode(file_get_contents($image));
+
+        $cat = [
+            'name' => 'my-cat',
+            'birth' =>  $now->toIso8601String(),
+            'description' => 'description',
+        ];
+
+        Sanctum::actingAs($this->user);
+
+        $response = $this->post('/api/cats', array_merge(
+            $cat,
+            [
+                'image' =>  $base64,
+            ]),
+        );
+
+        $response
+            ->assertStatus(201)
+            ->assertJson([
+                'data' => array_merge(
+                    $cat,
+                    [
+                        'picture' => $base64,
+                    ],
+                )
+            ]);
+
+        $created = $response->json();
+
+        $this->assertDatabaseHas('cats', [
+            'id' => $created['data']['id'],
+            'name' => $cat['name'],
+            'birth' => $now->format('Y-m-d'),
+            'user_id' => $this->user->id,
+        ]);
+
+        $this->assertNotEmpty(Cat::find($created['data']['id'])->picture);
     }
 
     /**
